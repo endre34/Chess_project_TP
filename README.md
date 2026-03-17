@@ -1,2 +1,2 @@
-# Chess_project_TP
-Projectul pentru TP (2026)
+# Chess_proiect_TP
+Proiectul pentru TP (2026)
