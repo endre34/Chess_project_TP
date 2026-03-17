@@ -1,5 +1,7 @@
 
-#ifndef __HELPER.H
-#define __HELPER.H
+#ifndef __HELPER_H
+#define __HELPER_H
 
-#endif //__HELPER.H
+void first_print(void);
+
+#endif //__HELPER_H
