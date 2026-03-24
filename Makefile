@@ -1,8 +1,10 @@
 CC = gcc
 OBJ = main.o helper.o
+LIBS = -l csfml-graphics -l csfml-system -l csfml-audio -l csfml-window
+PRG_N = Chess
 
-prg : $(OBJ)
-	$(CC) -Wall -g -o prg $(OBJ)
+$(PRG_N) : $(OBJ)
+	$(CC) -Wall -g -o $(PRG_N) $(OBJ) $(LIBS)
 
 $(OBJ) : helper.h
 

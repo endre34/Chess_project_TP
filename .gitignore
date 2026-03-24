@@ -55,4 +55,8 @@ dkms.conf
 *.dwo
 
 # main executable file
-prg
+Chess
+
+# C tags
+.swp
+tags

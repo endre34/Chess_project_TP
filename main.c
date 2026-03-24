@@ -1,9 +1,17 @@
 #include <stdio.h>
 
-#include "helper.h"
+#include <SFML/Graphics.h>
+
 
 int main(int argc, char* argv[])
 {
-    first_print();
+    sfRenderWindow* window = sfRenderWindow_create((sfVideoMode){400, 400, 8}, "Chess: The Game", 1 << 2, NULL);
+
+    while (sfRenderWindow_isOpen(window))
+    {
+
+    }
+
+    sfRenderWindow_destroy(window);
     return 0;
 }
