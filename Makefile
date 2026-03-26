@@ -10,4 +10,4 @@ $(OBJ):
 
 .PHONY: clean
 clean:
-	-rm prg $(OBJ)
+	-rm $(PRG_N) $(OBJ)
