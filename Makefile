@@ -6,7 +6,8 @@ PRG_N = Chess
 $(PRG_N): $(OBJ)
 	$(CC) -Wall -g -o $(PRG_N) $(OBJ) $(LIBS)
 
-$(OBJ): interactables.h button.h
+main.o: button.h
+button.o: interactables.h button.h
 
 .PHONY: clean
 clean:

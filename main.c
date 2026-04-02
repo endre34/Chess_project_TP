@@ -20,15 +20,17 @@ int main(int argc, char* argv[])
 
     while (sfRenderWindow_isOpen(window))
     {
-        while (sfRenderWindow_pollEvent(window, &event))
-        {
-            
-        }
-
         sfRenderWindow_clear(window, sfBlack);
         sfRenderWindow_drawRectangleShape(window, rectangle, NULL);
         sfRenderWindow_display(window);
         
+        while (sfRenderWindow_pollEvent(window, &event))
+        {
+            if (event.type == sfEvtKeyReleased && event.key.code == sfKeyEscape)
+            {
+                sfRenderWindow_close(window);
+            }
+        }
     }
 
     sfRenderWindow_destroy(window);
