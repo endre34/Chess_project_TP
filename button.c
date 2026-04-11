@@ -128,6 +128,26 @@ sfColor sfButton_getFillColor(const sfButton* button)
     return sfRectangleShape_getFillColor(button->shape);
 }
 
+void sfButton_setTexture(sfButton* button, const sfTexture* texture, sfBool resetRect)
+{
+    sfRectangleShape_setTexture(button->shape, texture, resetRect);
+}
+
+const sfTexture* sfButton_getTexture(const sfButton* button)
+{
+    return sfRectangleShape_getTexture(button->shape);
+}
+
+void sfButton_setTextureRect(sfButton* button, sfIntRect textureRect)
+{
+    sfRectangleShape_setTextureRect(button->shape, textureRect);
+}
+
+sfIntRect sfButton_getTextureRect(const sfButton* button)
+{
+    return sfRectangleShape_getTextureRect(button->shape);
+}
+
 void sfButton_setTextString(sfButton* button, const char* string)
 {
     sfText_setString(button->text, string);

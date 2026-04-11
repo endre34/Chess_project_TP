@@ -41,6 +41,13 @@ float sfButton_getLetterSpacing(const sfButton*);
 void sfButton_setTextColor(sfButton*, sfColor);
 sfColor sfButton_getTextColor(const sfButton*);
 
+/* Texture manipulation */
+void sfButton_setTexture(sfButton*, const sfTexture*, sfBool);
+const sfTexture* sfButton_getTexture(const sfButton*);
+
+void sfButton_setTextureRect(sfButton*, sfIntRect);
+sfIntRect sfButton_getTextureRect(const sfButton*);
+
 /* Outline manipulation */
 void sfButton_setOutlineColor(sfButton*, sfColor);
 sfColor sfButton_getOutlineColor(const sfButton*);
