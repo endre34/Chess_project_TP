@@ -2,13 +2,13 @@
 
 #include <stdlib.h>
 
-struct sfButton
+struct Button
 {
     sfRectangleShape* shape;
     sfText* text;
 };
 
-static void sfButton_updateTextPosition(sfButton* button)
+static void button_updateTextPosition(Button* button)
 {
     sfFloatRect textBounds;
     sfVector2f buttonPosition;
@@ -38,11 +38,11 @@ static void sfButton_updateTextPosition(sfButton* button)
     );
 }
 
-sfButton* sfButton_create(void)
+Button* button_create(void)
 {
-    sfButton* button;
+    Button* button;
 
-    button = malloc(sizeof(*button));
+    button = malloc(sizeof(Button));
 
     button->shape = sfRectangleShape_create();
     button->text = sfText_create();
@@ -59,176 +59,176 @@ sfButton* sfButton_create(void)
     sfText_setLetterSpacing(button->text, 1.0f);
     sfText_setFillColor(button->text, sfBlack);
 
-    sfButton_updateTextPosition(button);
+    button_updateTextPosition(button);
 
     return button;
 }
 
-sfButton* sfButton_copy(const sfButton* button)
+Button* button_copy(const Button* button)
 {
-    sfButton* copy;
+    Button* copy;
 
-    copy = malloc(sizeof(*copy));
+    copy = malloc(sizeof(Button));
 
     copy->shape = sfRectangleShape_copy(button->shape);
     copy->text = sfText_copy(button->text);
 
-    sfButton_updateTextPosition(copy);
+    button_updateTextPosition(copy);
 
     return copy;
 }
 
-void sfButton_destroy(sfButton* button)
+void button_destroy(Button* button)
 {
     sfRectangleShape_destroy(button->shape);
     sfText_destroy(button->text);
     free(button);
 }
 
-void sfButton_setSize(sfButton* button, sfVector2f size)
+void button_setSize(Button* button, sfVector2f size)
 {
     sfRectangleShape_setSize(button->shape, size);
-    sfButton_updateTextPosition(button);
+    button_updateTextPosition(button);
 }
 
-sfVector2f sfButton_getSize(const sfButton* button)
+sfVector2f button_getSize(const Button* button)
 {
     return sfRectangleShape_getSize(button->shape);
 }
 
-void sfButton_setPosition(sfButton* button, sfVector2f position)
+void button_setPosition(Button* button, sfVector2f position)
 {
     sfRectangleShape_setPosition(button->shape, position);
-    sfButton_updateTextPosition(button);
+    button_updateTextPosition(button);
 }
 
-sfVector2f sfButton_getPosition(const sfButton* button)
+sfVector2f button_getPosition(const Button* button)
 {
     return sfRectangleShape_getPosition(button->shape);
 }
 
-void sfButton_setOrigin(sfButton* button, sfVector2f origin)
+void button_setOrigin(Button* button, sfVector2f origin)
 {
     sfRectangleShape_setOrigin(button->shape, origin);
-    sfButton_updateTextPosition(button);
+    button_updateTextPosition(button);
 }
 
-sfVector2f sfButton_getOrigin(const sfButton* button)
+sfVector2f button_getOrigin(const Button* button)
 {
     return sfRectangleShape_getOrigin(button->shape);
 }
 
-void sfButton_setFillColor(sfButton* button, sfColor color)
+void button_setFillColor(Button* button, sfColor color)
 {
     sfRectangleShape_setFillColor(button->shape, color);
 }
 
-sfColor sfButton_getFillColor(const sfButton* button)
+sfColor button_getFillColor(const Button* button)
 {
     return sfRectangleShape_getFillColor(button->shape);
 }
 
-void sfButton_setTexture(sfButton* button, const sfTexture* texture, sfBool resetRect)
+void button_setTexture(Button* button, const sfTexture* texture, sfBool resetRect)
 {
     sfRectangleShape_setTexture(button->shape, texture, resetRect);
 }
 
-const sfTexture* sfButton_getTexture(const sfButton* button)
+const sfTexture* button_getTexture(const Button* button)
 {
     return sfRectangleShape_getTexture(button->shape);
 }
 
-void sfButton_setTextureRect(sfButton* button, sfIntRect textureRect)
+void button_setTextureRect(Button* button, sfIntRect textureRect)
 {
     sfRectangleShape_setTextureRect(button->shape, textureRect);
 }
 
-sfIntRect sfButton_getTextureRect(const sfButton* button)
+sfIntRect button_getTextureRect(const Button* button)
 {
     return sfRectangleShape_getTextureRect(button->shape);
 }
 
-void sfButton_setTextString(sfButton* button, const char* string)
+void button_setTextString(Button* button, const char* string)
 {
     sfText_setString(button->text, string);
-    sfButton_updateTextPosition(button);
+    button_updateTextPosition(button);
 }
 
-const char* sfButton_getTextString(const sfButton* button)
+const char* button_getTextString(const Button* button)
 {
     return sfText_getString(button->text);
 }
 
-void sfButton_setTextFont(sfButton* button, const sfFont* font)
+void button_setTextFont(Button* button, const sfFont* font)
 {
     sfText_setFont(button->text, font);
-    sfButton_updateTextPosition(button);
+    button_updateTextPosition(button);
 }
 
-const sfFont* sfButton_getTextFont(const sfButton* button)
+const sfFont* button_getTextFont(const Button* button)
 {
     return sfText_getFont(button->text);
 }
 
-void sfButton_setCharacterSize(sfButton* button, unsigned int size)
+void button_setCharacterSize(Button* button, unsigned int size)
 {
     sfText_setCharacterSize(button->text, size);
-    sfButton_updateTextPosition(button);
+    button_updateTextPosition(button);
 }
 
-unsigned int sfButton_getCharacterSize(const sfButton* button)
+unsigned int button_getCharacterSize(const Button* button)
 {
     return sfText_getCharacterSize(button->text);
 }
 
-void sfButton_setLetterSpacing(sfButton* button, float spacing)
+void button_setLetterSpacing(Button* button, float spacing)
 {
     sfText_setLetterSpacing(button->text, spacing);
-    sfButton_updateTextPosition(button);
+    button_updateTextPosition(button);
 }
 
-float sfButton_getLetterSpacing(const sfButton* button)
+float button_getLetterSpacing(const Button* button)
 {
     return sfText_getLetterSpacing(button->text);
 }
 
-void sfButton_setTextColor(sfButton* button, sfColor color)
+void button_setTextColor(Button* button, sfColor color)
 {
     sfText_setFillColor(button->text, color);
 }
 
-sfColor sfButton_getTextColor(const sfButton* button)
+sfColor button_getTextColor(const Button* button)
 {
     return sfText_getFillColor(button->text);
 }
 
-void sfButton_setOutlineColor(sfButton* button, sfColor color)
+void button_setOutlineColor(Button* button, sfColor color)
 {
     sfRectangleShape_setOutlineColor(button->shape, color);
 }
 
-sfColor sfButton_getOutlineColor(const sfButton* button)
+sfColor button_getOutlineColor(const Button* button)
 {
     return sfRectangleShape_getOutlineColor(button->shape);
 }
 
-void sfButton_setOutlineThickness(sfButton* button, float thickness)
+void button_setOutlineThickness(Button* button, float thickness)
 {
     sfRectangleShape_setOutlineThickness(button->shape, thickness);
-    sfButton_updateTextPosition(button);
+    button_updateTextPosition(button);
 }
 
-float sfButton_getOutlineThickness(const sfButton* button)
+float button_getOutlineThickness(const Button* button)
 {
     return sfRectangleShape_getOutlineThickness(button->shape);
 }
 
-sfFloatRect sfButton_getGlobalBounds(const sfButton* button)
+sfFloatRect button_getGlobalBounds(const Button* button)
 {
     return sfRectangleShape_getGlobalBounds(button->shape);
 }
 
-void sfButton_draw(sfRenderWindow* window, const sfButton* button)
+void button_draw(sfRenderWindow* window, const Button* button)
 {
     sfRenderWindow_drawRectangleShape(window, button->shape, NULL);
     sfRenderWindow_drawText(window, button->text, NULL);

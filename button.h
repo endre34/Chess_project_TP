@@ -3,60 +3,60 @@
 
 #include <SFML/Graphics.h>
 
-#include "interactables.h"
+#include "ui_elements.h"
 
 
 /* Lifecycle */
-sfButton* sfButton_create(void);
-sfButton* sfButton_copy(const sfButton*);
-void sfButton_destroy(sfButton*);
+Button* button_create(void);
+Button* button_copy(const Button*);
+void button_destroy(Button*);
 
 /* General manipulation */
-void sfButton_setSize(sfButton*, sfVector2f);
-sfVector2f sfButton_getSize(const sfButton*);
+void button_setSize(Button*, sfVector2f);
+sfVector2f button_getSize(const Button*);
 
-void sfButton_setPosition(sfButton*, sfVector2f);
-sfVector2f sfButton_getPosition(const sfButton*);
+void button_setPosition(Button*, sfVector2f);
+sfVector2f button_getPosition(const Button*);
 
-void sfButton_setOrigin(sfButton*, sfVector2f);
-sfVector2f sfButton_getOrigin(const sfButton*);
+void button_setOrigin(Button*, sfVector2f);
+sfVector2f button_getOrigin(const Button*);
 
 /* Fill color manipulation */
-void sfButton_setFillColor(sfButton*, sfColor);
-sfColor sfButton_getFillColor(const sfButton*);
+void button_setFillColor(Button*, sfColor);
+sfColor button_getFillColor(const Button*);
 
 /* Text manipulation */
-void sfButton_setTextString(sfButton*, const char*);
-const char* sfButton_getTextString(const sfButton*);
+void button_setTextString(Button*, const char*);
+const char* button_getTextString(const Button*);
 
-void sfButton_setTextFont(sfButton*, const sfFont*);
-const sfFont* sfButton_getTextFont(const sfButton*);
+void button_setTextFont(Button*, const sfFont*);
+const sfFont* button_getTextFont(const Button*);
 
-void sfButton_setCharacterSize(sfButton*, unsigned int);
-unsigned int sfButton_getCharacterSize(const sfButton*);
+void button_setCharacterSize(Button*, unsigned int);
+unsigned int button_getCharacterSize(const Button*);
 
-void sfButton_setLetterSpacing(sfButton*, float);
-float sfButton_getLetterSpacing(const sfButton*);
+void button_setLetterSpacing(Button*, float);
+float button_getLetterSpacing(const Button*);
 
-void sfButton_setTextColor(sfButton*, sfColor);
-sfColor sfButton_getTextColor(const sfButton*);
+void button_setTextColor(Button*, sfColor);
+sfColor button_getTextColor(const Button*);
 
 /* Texture manipulation */
-void sfButton_setTexture(sfButton*, const sfTexture*, sfBool);
-const sfTexture* sfButton_getTexture(const sfButton*);
+void button_setTexture(Button*, const sfTexture*, sfBool);
+const sfTexture* button_getTexture(const Button*);
 
-void sfButton_setTextureRect(sfButton*, sfIntRect);
-sfIntRect sfButton_getTextureRect(const sfButton*);
+void button_setTextureRect(Button*, sfIntRect);
+sfIntRect button_getTextureRect(const Button*);
 
 /* Outline manipulation */
-void sfButton_setOutlineColor(sfButton*, sfColor);
-sfColor sfButton_getOutlineColor(const sfButton*);
+void button_setOutlineColor(Button*, sfColor);
+sfColor button_getOutlineColor(const Button*);
 
-void sfButton_setOutlineThickness(sfButton*, float);
-float sfButton_getOutlineThickness(const sfButton*);
+void button_setOutlineThickness(Button*, float);
+float button_getOutlineThickness(const Button*);
 
 /* Utility */
-sfFloatRect sfButton_getGlobalBounds(const sfButton*);
-void sfButton_draw(sfRenderWindow*, const sfButton*);
+sfFloatRect button_getGlobalBounds(const Button*);
+void button_draw(sfRenderWindow*, const Button*);
 
 #endif // BUTTON_H
