@@ -1,6 +1,6 @@
 
-#ifndef INTERACTABLES_H
-#define INTERACTABLES_H
+#ifndef UI_ELEMENTS_H
+#define UI_ELEMENTS_H
 
 typedef struct Button Button;
 typedef struct TextField TextField;
@@ -9,5 +9,5 @@ typedef struct DisplayField DisplayField;
 
 typedef struct TimerField TimerField;
 
-#endif // INTERACTABLES_H
+#endif // UI_ELEMENTS_H
 

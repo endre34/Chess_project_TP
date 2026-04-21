@@ -1,11 +1,36 @@
 #include "button.h"
 
 #include <stdlib.h>
+#include "ui_utils.h"
+
+typedef enum State
+{
+    idle,
+    hovered,
+    pressed
+
+} State;
+
+typedef struct TextureInfo
+{
+    sfIntRect idle;
+    sfBool idleAvailability;
+
+    sfIntRect hover;
+    sfBool hoverAvailability;
+
+    sfIntRect press;
+    sfBool pressAvailability;
+
+} TextureInfo;
 
 struct Button
 {
     sfRectangleShape* shape;
     sfText* text;
+
+    TextureInfo textureInfo;
+    State state;
 };
 
 static void button_updateTextPosition(Button* button)
@@ -38,6 +63,14 @@ static void button_updateTextPosition(Button* button)
     );
 }
 
+static sfIntRect button_getOptionalIntRect(sfBool available, sfIntRect rect)
+{
+    if (available)
+        return rect;
+
+    return ZeroRect;
+}
+
 Button* button_create(void)
 {
     Button* button;
@@ -46,6 +79,15 @@ Button* button_create(void)
 
     button->shape = sfRectangleShape_create();
     button->text = sfText_create();
+
+    button->textureInfo.idle = (sfIntRect){0};
+    button->textureInfo.idleAvailability = sfFalse;
+
+    button->textureInfo.hover = (sfIntRect){0};
+    button->textureInfo.hoverAvailability = sfFalse;
+
+    button->textureInfo.press = (sfIntRect){0};
+    button->textureInfo.pressAvailability = sfFalse;
 
     sfRectangleShape_setSize(button->shape, (sfVector2f){0.0f, 0.0f});
     sfRectangleShape_setPosition(button->shape, (sfVector2f){0.0f, 0.0f});
@@ -138,14 +180,40 @@ const sfTexture* button_getTexture(const Button* button)
     return sfRectangleShape_getTexture(button->shape);
 }
 
-void button_setTextureRect(Button* button, sfIntRect textureRect)
+void button_setTextureRect_onIdle(Button* button, sfIntRect idle)
 {
-    sfRectangleShape_setTextureRect(button->shape, textureRect);
+    button->textureInfo.idle = idle;
+
+    button->textureInfo.idleAvailability = (sfVector2i_cmp(sfIntRect_getSize(&idle), ZeroIntVect)) ? sfFalse : sfTrue;
 }
 
-sfIntRect button_getTextureRect(const Button* button)
+sfIntRect button_getTextureRect_onIdle(const Button* button)
 {
-    return sfRectangleShape_getTextureRect(button->shape);
+    return button_getOptionalIntRect(button->textureInfo.idleAvailability, button->textureInfo.idle);
+}
+
+void button_setTextureRect_onHover(Button* button, sfIntRect hover)
+{
+    button->textureInfo.hover = hover;
+
+    button->textureInfo.hoverAvailability = (sfVector2i_cmp(sfIntRect_getSize(&hover), ZeroIntVect)) ? sfFalse : sfTrue;
+}
+
+sfIntRect button_getTextureRect_onHover(const Button* button)
+{
+    return button_getOptionalIntRect(button->textureInfo.hoverAvailability, button->textureInfo.hover);
+}
+
+void button_setTextureRect_onPress(Button* button, sfIntRect press)
+{
+    button->textureInfo.press = press;
+
+    button->textureInfo.pressAvailability = (sfVector2i_cmp(sfIntRect_getSize(&press), ZeroIntVect)) ? sfFalse : sfTrue;
+}
+
+sfIntRect button_getTextureRect_onPress(const Button* button)
+{
+    return button_getOptionalIntRect(button->textureInfo.pressAvailability, button->textureInfo.press);
 }
 
 void button_setTextString(Button* button, const char* string)

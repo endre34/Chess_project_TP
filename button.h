@@ -45,8 +45,14 @@ sfColor button_getTextColor(const Button*);
 void button_setTexture(Button*, const sfTexture*, sfBool);
 const sfTexture* button_getTexture(const Button*);
 
-void button_setTextureRect(Button*, sfIntRect);
-sfIntRect button_getTextureRect(const Button*);
+void button_setTextureRect_onIdle(Button*, sfIntRect);
+sfIntRect button_getTextureRect_onIdle(const Button*);
+
+void button_setTextureRect_onHover(Button*, sfIntRect);
+sfIntRect button_getTextureRect_onHover(const Button*);
+
+void button_setTextureRect_onPress(Button*, sfIntRect);
+sfIntRect button_getTextureRect_onPress(const Button*);
 
 /* Outline manipulation */
 void button_setOutlineColor(Button*, sfColor);
