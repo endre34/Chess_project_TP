@@ -1,21 +1,40 @@
-CC = gcc
-OBJ = main.o button.o main_menu.o display_field.o ui_utils.o
-LIBS = -lcsfml-graphics -lcsfml-system -lcsfml-audio -lcsfml-window -lm
+# ===== Program =====
 PRG_N = Chess
-CFLAGS = -Wall -Wextra -g -O0
+
+# ===== Compiler & compiler settings =====
+CC = gcc
+CFLAGS = -Wall -Wextra -g -O0 -I include
+
+# ===== Libraries =====
+LIBS = -l csfml-graphics -l csfml-system -l csfml-window -l m
+
+# ===== Building program from =====
+OBJ = build/main.o build/button.o build/main_menu.o build/display_field.o build/ui_utils.o
+
+all: $(PRG_N)
 
 $(PRG_N): $(OBJ)
-	$(CC) $(CFLAGS) -o $(PRG_N) $(OBJ) $(LIBS)
+	$(CC) $(CFLAGS) $(OBJ) -o $(PRG_N) $(LIBS)
 
-main.o: main.c
+build/%.o: src/%.c
+	mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) -c $< -o $@
 
-main_menu.o: main_menu.c main_menu.h interfaces.h ui_elements.h button.h mouse.h
+build/main.o:
 
-ui_utils.o: ui_utils.c ui_utils.h
-button.o: button.c button.h ui_elements.h ui_utils.h
-display_field.o: display_field.c display_field.h ui_elements.h
+build/main_menu.o: include/main_menu.h include/interfaces.h include/ui_elements.h include/button.h include/mouse.h
+
+build/ui_utils.o: include/ui_utils.h
+build/button.o: include/button.h include/ui_elements.h include/ui_utils.h
+build/display_field.o: include/display_field.h include/ui_elements.h
 
 
-.PHONY: clean
+.PHONY: clean rebuild run
+
 clean:
-	-rm -f $(PRG_N) $(OBJ)
+	-rm -rf $(PRG_N) $(OBJ) build
+
+rebuild: clean all
+
+run: $(PRG_N)	# build and run
+	./$(PRG_N)
