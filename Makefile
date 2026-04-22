@@ -8,25 +8,30 @@ CFLAGS = -Wall -Wextra -g -O0 -I include
 # ===== Libraries =====
 LIBS = -l csfml-graphics -l csfml-system -l csfml-window -l m
 
+# ===== Program directories =====
+SRC_DIR = src
+INC_DIR = include
+BLD_DIR = build
+
 # ===== Building program from =====
-OBJ = build/main.o build/button.o build/main_menu.o build/display_field.o build/ui_utils.o
+OBJ = $(BLD_DIR)/main.o $(BLD_DIR)/button.o $(BLD_DIR)/main_menu.o $(BLD_DIR)/display_field.o $(BLD_DIR)/ui_utils.o
 
 all: $(PRG_N)
 
 $(PRG_N): $(OBJ)
 	$(CC) $(CFLAGS) $(OBJ) -o $(PRG_N) $(LIBS)
 
-build/%.o: src/%.c
+$(BLD_DIR)/%.o: $(SRC_DIR)/%.c
 	mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c $< -o $@
 
-build/main.o:
+$(BLD_DIR)/main.o: $(SRC_DIR)/main.c
 
-build/main_menu.o: include/main_menu.h include/interfaces.h include/ui_elements.h include/button.h include/mouse.h
+$(BLD_DIR)/main_menu.o: $(SRC_DIR)/main_menu.c $(INC_DIR)/main_menu.h $(INC_DIR)/interfaces.h $(INC_DIR)/ui_elements.h $(INC_DIR)/button.h $(INC_DIR)/mouse.h
 
-build/ui_utils.o: include/ui_utils.h
-build/button.o: include/button.h include/ui_elements.h include/ui_utils.h
-build/display_field.o: include/display_field.h include/ui_elements.h
+$(BLD_DIR)/ui_utils.o: $(SRC_DIR)/ui_utils.c $(INC_DIR)/ui_utils.h
+$(BLD_DIR)/button.o: $(SRC_DIR)/button.c $(INC_DIR)/button.h $(INC_DIR)/ui_elements.h $(INC_DIR)/ui_utils.h
+$(BLD_DIR)/display_field.o: $(SRC_DIR)/display_field.c $(INC_DIR)/display_field.h $(INC_DIR)/ui_elements.h
 
 
 .PHONY: clean rebuild run
