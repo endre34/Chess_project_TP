@@ -7,7 +7,5 @@ typedef struct TextField TextField;
 
 typedef struct DisplayField DisplayField;
 
-typedef struct TimerField TimerField;
-
 #endif // UI_ELEMENTS_H
 

@@ -5,6 +5,8 @@
 
 #include "ui_elements.h"
 
+typedef void(*buttonAction)(void*);
+
 
 /* Lifecycle */
 Button* button_create(void);

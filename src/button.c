@@ -31,6 +31,9 @@ struct Button
 
     TextureInfo textureInfo;
     State state;
+
+    buttonAction action;
+    void* actionData;
 };
 
 static void button_updateTextPosition(Button* button)
