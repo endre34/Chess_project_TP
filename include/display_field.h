@@ -5,6 +5,23 @@
 
 #include "ui_elements.h"
 
+typedef enum DisplayFieldHorizontalAlignment
+{
+    displayFieldTextAlignLeft,
+    displayFieldTextAlignCenter,
+    displayFieldTextAlignRight
+
+} DisplayFieldHorizontalAlignment;
+
+typedef enum DisplayFieldVerticalAlignment
+{
+    displayFieldTextAlignTop,
+    displayFieldTextAlignMiddle,
+    displayFieldTextAlignBottom
+
+} DisplayFieldVerticalAlignment;
+
+
 /* Lifecycle */
 DisplayField* displayField_create(void);
 DisplayField* displayField_copy(const DisplayField*);
@@ -39,6 +56,17 @@ float displayField_getLetterSpacing(const DisplayField*);
 
 void displayField_setTextColor(DisplayField*, sfColor);
 sfColor displayField_getTextColor(const DisplayField*);
+
+void displayField_setTextPadding(DisplayField*, sfVector2f);
+sfVector2f displayField_getTextPadding(const DisplayField*);
+
+void displayField_setTextHorizontalAlignment(DisplayField*, DisplayFieldHorizontalAlignment);
+DisplayFieldHorizontalAlignment displayField_getTextHorizontalAlignment(const DisplayField*);
+
+void displayField_setTextVerticalAlignment(DisplayField*, DisplayFieldVerticalAlignment);
+DisplayFieldVerticalAlignment displayField_getTextVerticalAlignment(const DisplayField*);
+
+void displayField_setTextAlignment(DisplayField*, DisplayFieldHorizontalAlignment, DisplayFieldVerticalAlignment);
 
 /* Texture manipulation */
 void displayField_setTexture(DisplayField*, const sfTexture*, sfBool);

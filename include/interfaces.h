@@ -4,9 +4,11 @@
 typedef struct mainMenu mainMenu;
 typedef struct creditsMenu credsMenu;
 typedef struct settingsMenu settingsMenu;
-
-typedef struct gameSettingMenu gameSetting;
+typedef struct gameSetupMenu gameSetupMenu;
 
 typedef struct mainGame mainGame;
+typedef struct gameSettingMenu gameSetting;
+
+
 
 #endif // MENUS_H

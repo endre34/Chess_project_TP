@@ -4,8 +4,17 @@
 #include <SFML/Graphics.h>
 
 #include "ui_elements.h"
+#include "mouse.h"
 
 typedef void(*buttonAction)(void*);
+
+typedef enum ButtonState
+{
+    buttonIdle,
+    buttonHovered,
+    buttonPressed
+
+} ButtonState;
 
 
 /* Lifecycle */
@@ -63,7 +72,18 @@ sfColor button_getOutlineColor(const Button*);
 void button_setOutlineThickness(Button*, float);
 float button_getOutlineThickness(const Button*);
 
+/* State and input */
+ButtonState button_getState(const Button*);
+
+void button_setAction(Button*, buttonAction, void*);
+buttonAction button_getAction(const Button*);
+void* button_getActionData(const Button*);
+void button_triggerAction(Button*);
+
+void button_updateMouse(Button*, const Mouse*);
+
 /* Utility */
+sfBool button_containsPoint(const Button*, sfVector2i);
 sfFloatRect button_getGlobalBounds(const Button*);
 void button_draw(sfRenderWindow*, const Button*);
 

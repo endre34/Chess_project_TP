@@ -6,36 +6,75 @@ struct DisplayField
 {
     sfRectangleShape* shape;
     sfText* text;
+
+    sfVector2f textPadding;
+    DisplayFieldHorizontalAlignment horizontalAlignment;
+    DisplayFieldVerticalAlignment verticalAlignment;
 };
 
-static void displayField_updateTextPosition(DisplayField* displayField)
+static sfFloatRect displayField_getContentBounds(const DisplayField* displayField)
 {
-    sfFloatRect textBounds;
     sfVector2f fieldPosition;
     sfVector2f fieldSize;
     sfVector2f fieldOrigin;
-
-    textBounds = sfText_getLocalBounds(displayField->text);
 
     fieldPosition = sfRectangleShape_getPosition(displayField->shape);
     fieldSize = sfRectangleShape_getSize(displayField->shape);
     fieldOrigin = sfRectangleShape_getOrigin(displayField->shape);
 
-    sfText_setOrigin(
-        displayField->text,
-        (sfVector2f){
-            textBounds.left + textBounds.width / 2.0f,
-            textBounds.top + textBounds.height / 2.0f
-        }
-    );
+    return (sfFloatRect){
+        fieldPosition.x - fieldOrigin.x + displayField->textPadding.x,
+        fieldPosition.y - fieldOrigin.y + displayField->textPadding.y,
+        fieldSize.x - 2.0f * displayField->textPadding.x,
+        fieldSize.y - 2.0f * displayField->textPadding.y
+    };
+}
 
-    sfText_setPosition(
-        displayField->text,
-        (sfVector2f){
-            fieldPosition.x + fieldSize.x / 2.0f - fieldOrigin.x,
-            fieldPosition.y + fieldSize.y / 2.0f - fieldOrigin.y
-        }
-    );
+static void displayField_updateTextPosition(DisplayField* displayField)
+{
+    sfFloatRect textBounds;
+    sfFloatRect contentBounds;
+
+    sfVector2f textOrigin;
+    sfVector2f textPosition;
+
+    textBounds = sfText_getLocalBounds(displayField->text);
+    contentBounds = displayField_getContentBounds(displayField);
+
+    if (displayField->horizontalAlignment == displayFieldTextAlignLeft)
+    {
+        textOrigin.x = textBounds.left;
+        textPosition.x = contentBounds.left;
+    }
+    else if (displayField->horizontalAlignment == displayFieldTextAlignRight)
+    {
+        textOrigin.x = textBounds.left + textBounds.width;
+        textPosition.x = contentBounds.left + contentBounds.width;
+    }
+    else
+    {
+        textOrigin.x = textBounds.left + textBounds.width / 2.0f;
+        textPosition.x = contentBounds.left + contentBounds.width / 2.0f;
+    }
+
+    if (displayField->verticalAlignment == displayFieldTextAlignTop)
+    {
+        textOrigin.y = textBounds.top;
+        textPosition.y = contentBounds.top;
+    }
+    else if (displayField->verticalAlignment == displayFieldTextAlignBottom)
+    {
+        textOrigin.y = textBounds.top + textBounds.height;
+        textPosition.y = contentBounds.top + contentBounds.height;
+    }
+    else
+    {
+        textOrigin.y = textBounds.top + textBounds.height / 2.0f;
+        textPosition.y = contentBounds.top + contentBounds.height / 2.0f;
+    }
+
+    sfText_setOrigin(displayField->text, textOrigin);
+    sfText_setPosition(displayField->text, textPosition);
 }
 
 DisplayField* displayField_create(void)
@@ -46,6 +85,10 @@ DisplayField* displayField_create(void)
 
     displayField->shape = sfRectangleShape_create();
     displayField->text = sfText_create();
+
+    displayField->textPadding = (sfVector2f){0.0f, 0.0f};
+    displayField->horizontalAlignment = displayFieldTextAlignCenter;
+    displayField->verticalAlignment = displayFieldTextAlignMiddle;
 
     sfRectangleShape_setSize(displayField->shape, (sfVector2f){0.0f, 0.0f});
     sfRectangleShape_setPosition(displayField->shape, (sfVector2f){0.0f, 0.0f});
@@ -72,6 +115,10 @@ DisplayField* displayField_copy(const DisplayField* displayField)
 
     copy->shape = sfRectangleShape_copy(displayField->shape);
     copy->text = sfText_copy(displayField->text);
+
+    copy->textPadding = displayField->textPadding;
+    copy->horizontalAlignment = displayField->horizontalAlignment;
+    copy->verticalAlignment = displayField->verticalAlignment;
 
     displayField_updateTextPosition(copy);
 
@@ -182,6 +229,51 @@ sfColor displayField_getTextColor(const DisplayField* displayField)
     return sfText_getFillColor(displayField->text);
 }
 
+void displayField_setTextPadding(DisplayField* displayField, sfVector2f padding)
+{
+    displayField->textPadding = padding;
+    displayField_updateTextPosition(displayField);
+}
+
+sfVector2f displayField_getTextPadding(const DisplayField* displayField)
+{
+    return displayField->textPadding;
+}
+
+void displayField_setTextHorizontalAlignment(DisplayField* displayField, DisplayFieldHorizontalAlignment alignment)
+{
+    displayField->horizontalAlignment = alignment;
+    displayField_updateTextPosition(displayField);
+}
+
+DisplayFieldHorizontalAlignment displayField_getTextHorizontalAlignment(const DisplayField* displayField)
+{
+    return displayField->horizontalAlignment;
+}
+
+void displayField_setTextVerticalAlignment(DisplayField* displayField, DisplayFieldVerticalAlignment alignment)
+{
+    displayField->verticalAlignment = alignment;
+    displayField_updateTextPosition(displayField);
+}
+
+DisplayFieldVerticalAlignment displayField_getTextVerticalAlignment(const DisplayField* displayField)
+{
+    return displayField->verticalAlignment;
+}
+
+void displayField_setTextAlignment(
+    DisplayField* displayField,
+    DisplayFieldHorizontalAlignment horizontalAlignment,
+    DisplayFieldVerticalAlignment verticalAlignment
+)
+{
+    displayField->horizontalAlignment = horizontalAlignment;
+    displayField->verticalAlignment = verticalAlignment;
+
+    displayField_updateTextPosition(displayField);
+}
+
 void displayField_setTexture(DisplayField* displayField, const sfTexture* texture, sfBool resetRect)
 {
     sfRectangleShape_setTexture(displayField->shape, texture, resetRect);
@@ -233,4 +325,3 @@ void displayField_draw(sfRenderWindow* window, const DisplayField* displayField)
     sfRenderWindow_drawRectangleShape(window, displayField->shape, NULL);
     sfRenderWindow_drawText(window, displayField->text, NULL);
 }
-

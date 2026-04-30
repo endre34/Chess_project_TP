@@ -11,27 +11,31 @@ LIBS = -l csfml-graphics -l csfml-system -l csfml-window -l m
 # ===== Program directories =====
 SRC_DIR = src
 INC_DIR = include
-BLD_DIR = build
+OBJ_DIR = build
 
 # ===== Building program from =====
-OBJ = $(BLD_DIR)/main.o $(BLD_DIR)/button.o $(BLD_DIR)/main_menu.o $(BLD_DIR)/display_field.o $(BLD_DIR)/ui_utils.o
+OBJ = $(OBJ_DIR)/main.o $(OBJ_DIR)/button.o $(OBJ_DIR)/main_menu.o $(OBJ_DIR)/display_field.o $(OBJ_DIR)/ui_utils.o $(OBJ_DIR)/text_field.o $(OBJ_DIR)/mouse.o
 
 all: $(PRG_N)
 
 $(PRG_N): $(OBJ)
 	$(CC) $(CFLAGS) $(OBJ) -o $(PRG_N) $(LIBS)
 
-$(BLD_DIR)/%.o: $(SRC_DIR)/%.c
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c $< -o $@
 
-$(BLD_DIR)/main.o: $(SRC_DIR)/main.c
+$(OBJ_DIR)/main.o: $(SRC_DIR)/main.c
 
-$(BLD_DIR)/main_menu.o: $(SRC_DIR)/main_menu.c $(INC_DIR)/main_menu.h $(INC_DIR)/interfaces.h $(INC_DIR)/ui_elements.h $(INC_DIR)/button.h $(INC_DIR)/mouse.h
+$(OBJ_DIR)/main_menu.o: $(SRC_DIR)/main_menu.c $(INC_DIR)/main_menu.h $(INC_DIR)/interfaces.h $(INC_DIR)/ui_elements.h \
+$(INC_DIR)/button.h $(INC_DIR)/display_field.h $(INC_DIR)/mouse.h
 
-$(BLD_DIR)/ui_utils.o: $(SRC_DIR)/ui_utils.c $(INC_DIR)/ui_utils.h
-$(BLD_DIR)/button.o: $(SRC_DIR)/button.c $(INC_DIR)/button.h $(INC_DIR)/ui_elements.h $(INC_DIR)/ui_utils.h
-$(BLD_DIR)/display_field.o: $(SRC_DIR)/display_field.c $(INC_DIR)/display_field.h $(INC_DIR)/ui_elements.h
+$(OBJ_DIR)/mouse.o: $(SRC_DIR)/mouse.c $(INC_DIR)/mouse.h
+
+$(OBJ_DIR)/ui_utils.o: $(SRC_DIR)/ui_utils.c $(INC_DIR)/ui_utils.h
+$(OBJ_DIR)/button.o: $(SRC_DIR)/button.c $(INC_DIR)/button.h $(INC_DIR)/ui_elements.h $(INC_DIR)/ui_utils.h $(INC_DIR)/mouse.h
+$(OBJ_DIR)/display_field.o: $(SRC_DIR)/display_field.c $(INC_DIR)/display_field.h $(INC_DIR)/ui_elements.h
+$(OBJ_DIR)/text_field.o: $(SRC_DIR)/text_field.c $(INC_DIR)/text_field.h $(INC_DIR)/ui_elements.h $(INC_DIR)/mouse.h
 
 
 .PHONY: clean rebuild run
